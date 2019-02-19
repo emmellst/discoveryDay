@@ -1,0 +1,63 @@
+<?
+require_once("database.php");
+require_once("functions.php");
+require_once("Student.php");
+require_once("Session.php");
+
+auth_setup();
+if (!auth_check()) header("location: index.php");
+if (!canReg()) {
+	echo "<HTML><h2>Registration is not yet open.<br/>Please <a href='index.php'>click here</a> to return to the front page</h2></html>";
+	die();
+}
+$allSessions = getAllSessions();
+
+$allStudents = getAllStudents();
+foreach ($allStudents as $student) if ($student->snum == $_SESSION['auth_user']) { $_SESSION['id'] = $student->id; }
+$student = $allStudents[$_SESSION['id']];
+
+//Set registration, new or coming in with chosen sessions
+$newReg = $student->regd;
+$sessions = array();
+$sessions[0] = $newReg ? 0 : $student->session1;
+$sessions[1] = $newReg ? 0 : $student->session2;
+$sessions[2] = $newReg ? 0 : $student->session3;
+
+?>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="theme.css">
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/registration.js"></script>
+</head>
+<body onload="loadIntro();">
+Welcome <?=$student->fname?> <?=$student->lname?>!
+
+<div id="selectionBox">
+<table>
+<?
+$x = 0;
+foreach ($sessions as $sessID) {
+	$session = $allSessions[$sessID];
+	$isDouble = 0;
+	$isTriple = 0;
+	if ($session->linked == "1,2,3") $isTriple = 1;
+	else if ($session->linked == "1,2" || $session->linked == "2,3") $isDouble = 1;
+
+	if (!$isDouble && !$isTriple) {
+		echo "<tr class='sessionBlock' onclick='populateInfoBox(".($x+1).");'><td><span class='blockHeader'>Session ".($x+1)."</span>\n";
+		echo "<span class='blockTitle'>".$session->name."</span>\n";
+		echo "<span class='blockDetails'>";
+		echo $session->cost == 0 ? "FREE" : $session->cost;
+		echo "</span>\n";
+		echo "</td></tr>\n";
+		$x++;
+	}
+}
+?>
+</table>
+</div>
+<div id="infoBox">
+</div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+name,description,cost,formPDFlocation,block,linked,supervisor,secretary,presenter,room,capacity,buffer
+"Climbing Wall","Long description here...",0,"forms/Climbing-Wall-Permission.pdf",1,"1,2","SupTeacher, Ms","SecTeacher, Mr","PresTeacher, Mr","SmallGym",20,2,0,1
+"Cake Decorating","Long description here",0,,2,,,,,"Foods Room",25,2,0,1
