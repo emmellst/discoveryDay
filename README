@@ -1,0 +1,41 @@
+database.php
+- contains all settings for database connection
+
+functions.php
+- be sure to specify local directory relative to www root
+- in "sendEmail" function, change email username and password
+
+paypal/config.php
+- change all API keys and relevant information
+
+contactModal.html
+- change to your contact information
+
+Uses PHP5, and make sure PHP5-curl package is installed if you want to use the email functions
+
+
+---importing---
+
+
+-students import CSV file format
+lastname, firstname, homeroomTeacher, student number, email, password
+ex:  Smith, John, "Emmell, S", S123456789, jsmit1@ocdsb.ca, 1231231231
+
+
+
+-session import CSV file format
+name, description, cost, formPDFlocation, block, linked, supervisor, secretary, presenter, room, capacity, buffer
+
+cost should always have a value, use 0 for free sessions
+formPDFlocation is the web-accessible location of the file to be downloaded as a permission form
+block is either 1, 2, or 3
+linked refers to other spots that should be occupied by this session. A double would be either 1,2 or 2,3, a triple 1,2,3
+	leave "linked" blank if session is a single session
+buffer is the amount to pad registration so we can manually slot students. Will fill up to capacity-buffer
+Supervisory, Secretary and Presenter can be left blank as appropriate
+
+examples:
+"Climbing Wall", "Long description here...", 0, "forms/Climbing-Wall-Permission.pdf", 1, "1,2", "SupTeacher, Ms", "SecTeacher, Mr", 
+	"PresTeacher, Mr", "SmallGym", 20,2
+"Cake Decorating", "Long description here", 0, , 2, , , , , "Foods Room", 25, 2,
+

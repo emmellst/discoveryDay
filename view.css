@@ -1,0 +1,8 @@
+.panel-heading {
+	cursor: pointer;
+}
+
+.panel, .panel-group .panel-heading+.panel-collapse>.panel-body{
+	margin: 0;
+	padding: 0;
+}
